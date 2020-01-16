@@ -1,0 +1,17 @@
+image: tudsqte/ci-image
+
+stages:
+    - test
+    - static-analysis
+
+test:
+  stage: test
+  script: "xvfb-run mvn -B test"
+  
+warnings:
+    stage: static-analysis
+    script:
+        - "mvn -B test-compile checkstyle:check"
+        - "mvn -B spotbugs:check"
+        - "mvn -B pmd:check"
+
